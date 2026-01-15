@@ -3,11 +3,38 @@ import { FaLandmark } from "react-icons/fa";
 import { FaBuildingUser } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 import { PiCertificateFill } from "react-icons/pi";
-import { SiHackerrank, SiIbm } from "react-icons/si";
+import { SiOracle, SiMicrosoft } from "react-icons/si";
+import { FaAws } from "react-icons/fa";
 
 function EducationAndExperience() {
+  const renderCertIcon = (iconName) => {
+    switch (iconName) {
+      case "google":
+        return <FcGoogle className="absolute right-5 top-3 text-3xl" />;
+      case "oracle":
+        return (
+          <SiOracle className="text-red-600 absolute right-5 top-3 text-3xl" />
+        );
+      case "microsoft":
+        return (
+          <SiMicrosoft className="text-blue-500 absolute right-5 top-3 text-3xl" />
+        );
+      case "amazon":
+        return (
+          <FaAws className="text-orange-500 absolute right-5 top-3 text-3xl" />
+        );
+      default:
+        return (
+          <PiCertificateFill className="text-zinc-500 absolute right-5 top-3 text-3xl" />
+        );
+    }
+  };
+
   return (
-    <section id="education-and-experience" className="mt-20 mx-4 lg:mx-20 flex flex-col md:flex-row gap-4 md:gap-2">
+    <section
+      id="education-and-experience"
+      className="mt-20 mx-4 lg:mx-20 flex flex-col md:flex-row gap-4 md:gap-2"
+    >
       {/* =========== EDUCATION =========== */}
       <div className="w-full md:w-[80%]">
         {/* =========== EDUCATION TITLE =========== */}
@@ -37,7 +64,11 @@ function EducationAndExperience() {
                 <div className="grow p-2 pb-8">
                   {/* =========== IMAGE AND SCHOOL NAME =========== */}
                   <h3 className="flex items-center gap-x-2 font-semibold text-zinc-800 dark:text-white">
-                    <img className="w-9 h-9 rounded-full" src={edu.image} alt="School Logo" />
+                    <img
+                      className="w-9 h-9 rounded-full"
+                      src={edu.image}
+                      alt="School Logo"
+                    />
                     <div className="leading-5">
                       {edu.school}
                       {/* =========== DEGREE =========== */}
@@ -46,7 +77,6 @@ function EducationAndExperience() {
                       </p>
                     </div>
                   </h3>
-                  
                 </div>
               </div>
             </div>
@@ -63,42 +93,45 @@ function EducationAndExperience() {
           data-hs-carousel='{"loadingClasses": "opacity-0"}'
           className="relative mt-4"
         >
-          <div className="hs-carousel relative overflow-hidden w-full h-48 bg-white dark:bg-gray-800 rounded-lg">
-            <div className="hs-carousel-body absolute top-0 bottom-0 start-0 flex flex-nowrap transition-transform duration-700 opacity-0">
-              {/* =========== CERTIFICATES LIST =========== */}
-              {user_info.certificates.map((cert, index) => {
-                return (
-                  <div className="hs-carousel-slide relative" key={index}>
-                    {cert.icon === "ibm" ? (
-                      <SiIbm className="text-blue-500 absolute right-5 top-0 text-5xl" />
-                    ) : cert.icon === "google" ? (
-                      <FcGoogle className="text-blue-500 absolute right-5 top-3 text-3xl" />
-                    ) : (
-                      <SiHackerrank className="text-green-500 absolute right-5 top-3 text-3xl" />
-                    )}
+          <div className="hs-carousel relative w-full h-48 overflow-hidden rounded-lg bg-white dark:bg-gray-800">
+            <div className="hs-carousel-body absolute inset-0 flex flex-nowrap transition-transform duration-700 opacity-0">
+              {user_info.certificates.map((cert, idx) => (
+                <div className="hs-carousel-slide relative w-full" key={idx}>
+                  {/* ICON */}
+                  <div className="absolute right-5 top-3 text-3xl">
+                    {renderCertIcon(cert.icon)}
+                  </div>
 
-                    <div className="flex justify-center items-center h-full bg-gray-100 p-6 dark:bg-neutral-900">
-                      <div className="hs-tooltip [--placement:bottom] inline-block">
-                        <a href={cert.link} target="_blank" rel="noreferrer" className="hs-tooltip-toggle text-center text-gray-800 dark:text-white hover:text-red-800 hover:dark:text-red-500">
-                          {/* =========== CERTIFICATE NAME =========== */}
-                          <p className=" transition duration-700 px-6 font-bold">
-                            {cert.title}
-                          </p>
-                          {/* =========== CERTIFICATE DESCRIPTION =========== */}
-                          <p className=" transition duration-700 px-6 text-sm">
-                            {cert.description}
-                          </p>
-                        </a>
+                  <div className="flex h-full items-center justify-center bg-gray-100 p-6 dark:bg-neutral-900">
+                    <div className="hs-tooltip [--placement:bottom] inline-block">
+                      <a
+                        href={cert.link}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="hs-tooltip-toggle text-center text-gray-800 hover:text-red-800 dark:text-white hover:dark:text-red-500"
+                      >
+                        {/* CERTIFICATE NAME */}
+                        <p className="px-6 font-bold transition duration-700">
+                          {cert.title}
+                        </p>
 
-                        {/* =========== TOOLTIP TEXT =========== */}
-                        <span className="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-white border dark:border-zinc-800 dark:bg-zinc-950 text-xs font-medium dark:text-white rounded shadow-sm" role="tooltip">
-                          Open Certificate
-                        </span>
-                      </div>
+                        {/* CERTIFICATE DESCRIPTION */}
+                        <p className="px-6 text-sm transition duration-700">
+                          {cert.description}
+                        </p>
+                      </a>
+
+                      {/* TOOLTIP */}
+                      <span
+                        className="hs-tooltip-content hs-tooltip-shown:visible hs-tooltip-shown:opacity-100 invisible absolute z-10 inline-block rounded bg-white px-2 py-1 text-xs font-medium opacity-0 shadow-sm transition-opacity dark:bg-zinc-950 dark:text-white dark:border dark:border-zinc-800"
+                        role="tooltip"
+                      >
+                        Open Certificate
+                      </span>
                     </div>
                   </div>
-                );
-              })}
+                </div>
+              ))}
             </div>
           </div>
 
@@ -146,7 +179,7 @@ function EducationAndExperience() {
               </svg>
             </span>
           </button>
-          
+
           {/* =========== CAROUSEL PAGINATION =========== */}
           <div className="hs-carousel-pagination flex justify-center absolute bottom-3 start-0 end-0 space-x-2">
             {user_info.certificates.map((cert, index) => {
@@ -160,7 +193,7 @@ function EducationAndExperience() {
           </div>
         </div>
       </div>
-      
+
       {/* =========== EXPERIENCE =========== */}
       <div className="w-full">
         {/* =========== EXPERIENCE TITLE =========== */}
@@ -190,7 +223,11 @@ function EducationAndExperience() {
                   <div className="grow p-2 pb-8">
                     {/* =========== COMPANY NAME =========== */}
                     <h3 className="flex items-center gap-x-2 font-semibold text-zinc-800 dark:text-white">
-                      <img className="w-9 rounded-full" src={exp.image} alt="Company Logo" />
+                      <img
+                        className="w-9 rounded-full"
+                        src={exp.image}
+                        alt="Company Logo"
+                      />
                       <div className="leading-5">
                         {exp.company}
                         {/* =========== POSITION =========== */}
@@ -199,7 +236,7 @@ function EducationAndExperience() {
                         </p>
                       </div>
                     </h3>
-                    
+
                     <ul className="list-disc list-inside text-zinc-800 dark:text-white mt-2">
                       {/* =========== DESCRIPTION LIST =========== */}
                       {exp.descriptions.map((desc, index) => {
